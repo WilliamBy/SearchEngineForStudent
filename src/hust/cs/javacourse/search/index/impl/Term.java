@@ -87,7 +87,7 @@ public class Term extends AbstractTerm {
     @Override
     public void writeObject(ObjectOutputStream out) {
         try {
-            out.writeObject(this);
+            out.writeObject(content);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -101,14 +101,11 @@ public class Term extends AbstractTerm {
     @Override
     public void readObject(ObjectInputStream in) {
         try {
-            Object obj = in.readObject();
-            if (obj instanceof Term) {
-                content = ((Term) obj).getContent();
-            } else throw new ClassNotFoundException();
+            content = (String) in.readObject();
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
-            System.out.println("Class Term can't be found!\n");
+            System.out.println("Deserialization failed: class Term not found!\n");
         }
     }
 

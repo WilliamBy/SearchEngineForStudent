@@ -53,7 +53,7 @@ public class StringSplitter {
 
         return list;
     }
-
+/*
     public static void main(String[] args){
         StringSplitter splitter = new StringSplitter();
         String regex1TestInput = "key1,， ,Key2;Key3，:Key4;；;Key5；？?Key6，!Key7；Key8   key9\nkey10.。？key11";
@@ -63,5 +63,5 @@ public class StringSplitter {
         for(int i = 0; i < parts.size(); i++){
             System.out.print(parts.get(i) + "	");
         }
-    }
+    }*/
 }
