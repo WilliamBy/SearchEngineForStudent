@@ -1,10 +1,12 @@
 package hust.cs.javacourse.search.index.impl;
 
 import hust.cs.javacourse.search.index.AbstractTerm;
+import hust.cs.javacourse.search.util.Config;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.Locale;
 import java.util.Objects;
 
 public class Term extends AbstractTerm {
@@ -32,10 +34,23 @@ public class Term extends AbstractTerm {
      */
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || this.getClass() != obj.getClass()) return false;
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || this.getClass() != obj.getClass()) {
+            return false;
+        }
         Term term = (Term) obj;
-        return Objects.equals(content, term.content);
+        if (content == null && term.content == null) {
+            return false;
+        }
+        if (content == null || term.content == null) {
+            return false;
+        }
+        if (Config.IGNORE_CASE) {   //检查是否区分大小写
+            return content.equalsIgnoreCase(term.content);
+        }
+        return content.equals(term.content);
     }
 
     /**

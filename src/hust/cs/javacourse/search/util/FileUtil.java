@@ -20,17 +20,14 @@ public class FileUtil {
         BufferedReader reader = null;
         try{
             StringBuffer buf = new StringBuffer();
-            reader = new BufferedReader(new InputStreamReader(new FileInputStream(new File(filePath))));
+            reader = new BufferedReader(new InputStreamReader(new FileInputStream(filePath)));
             while( (s = reader.readLine()) != null){
                 buf.append(s).append("\n"); //reader.readLine())返回的字符串会去掉换行符，因此这里要加上
             }
             s = buf.toString().trim(); //去掉最后一个多的换行符
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
-        }
-        finally {
+        } finally {
             if(reader != null) {
                 try {
                     reader.close();
@@ -50,7 +47,7 @@ public class FileUtil {
     public static void write(String content, String filePath){
         PrintWriter writer = null;
         try{
-            writer = new PrintWriter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File(filePath)))));
+            writer = new PrintWriter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(filePath))));
             writer.print(content);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -68,14 +65,16 @@ public class FileUtil {
      * @return ： 指定目录下所有文件的绝对路径的列表
      */
     public static List<String> list(String dirPath){
-        List<String> filePaths = new ArrayList<String>();
+        List<String> filePaths = new ArrayList<>();
         try{
             File dir = new File(dirPath);
             if(dir.isDirectory()){
                 File[] files = dir.listFiles();
+                assert files != null;
                 for(File f: files){
                     if(f.isFile()) {
-                        filePaths.add(f.getCanonicalPath()); //File类的getCanonicalPath方法返回绝对路径
+                        //File类的getCanonicalPath方法返回绝对路径
+                        filePaths.add(f.getCanonicalPath());
                     }
                 }
             }
@@ -93,14 +92,16 @@ public class FileUtil {
      * @return : 所有匹配指定后缀名的文件绝对路径列表
      */
     public static List<String> list(String dirPath, String suffix){
-        List<String> filePaths = new ArrayList<String>();
+        List<String> filePaths = new ArrayList<>();
         try{
             File dir = new File(dirPath);
             if(dir.isDirectory()){
                 File[] files = dir.listFiles();
+                assert files != null;
                 for(File f: files){
                     if(f.isFile()) {
-                        String path = f.getCanonicalPath(); //File类的getCanonicalPath方法返回绝对路径
+                        //File类的getCanonicalPath方法返回绝对路径
+                        String path = f.getCanonicalPath();
                         if(path.toLowerCase().endsWith(suffix.toLowerCase())) {
                             filePaths.add(path);
                         }

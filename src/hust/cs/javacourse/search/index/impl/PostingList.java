@@ -17,7 +17,13 @@ public class PostingList extends AbstractPostingList {
      */
     @Override
     public void add(AbstractPosting posting) {
-        if (list.contains(posting)) return;
+        for (AbstractPosting previousPosting : list) {
+            if (previousPosting.getDocId() == posting.getDocId()) {
+                previousPosting.setFreq(previousPosting.getFreq() + posting.getFreq());
+                previousPosting.getPositions().addAll(posting.getPositions());
+                return;
+            }
+        }
         list.add(posting);
     }
 
@@ -76,7 +82,9 @@ public class PostingList extends AbstractPostingList {
     @Override
     public int indexOf(int docId) {
         for (int i = 0; i < list.size(); i++) {
-            if (list.get(i).getDocId() == docId) return i;
+            if (list.get(i).getDocId() == docId) {
+                return i;
+            }
         }
         return -1;
     }
@@ -160,7 +168,9 @@ public class PostingList extends AbstractPostingList {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        for (AbstractPosting posting : list) posting.writeObject(out);
+        for (AbstractPosting posting : list) {
+            posting.writeObject(out);
+        }
     }
 
     /**
@@ -173,7 +183,11 @@ public class PostingList extends AbstractPostingList {
         try {
             list.clear();
             int length = (int) in.readObject();
-            for (int i = 0; i < length; i++) list.add((AbstractPosting) in.readObject());
+            for (int i = 0; i < length; i++) {
+                AbstractPosting posting = new Posting();
+                posting.readObject(in);
+                list.add(posting);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {

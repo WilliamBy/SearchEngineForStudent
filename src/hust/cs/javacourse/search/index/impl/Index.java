@@ -1,17 +1,10 @@
 package hust.cs.javacourse.search.index.impl;
 
-import hust.cs.javacourse.search.index.AbstractDocument;
-import hust.cs.javacourse.search.index.AbstractIndex;
-import hust.cs.javacourse.search.index.AbstractPostingList;
-import hust.cs.javacourse.search.index.AbstractTerm;
-import java.io.File;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.util.Set;
+import hust.cs.javacourse.search.index.*;
 
-/**
- * TODO: AbstractIndex的具体实现类
- */
+import java.io.*;
+import java.util.*;
+
 public class Index extends AbstractIndex {
     /**
      * 返回索引的字符串表示
@@ -31,7 +24,20 @@ public class Index extends AbstractIndex {
      */
     @Override
     public void addDocument(AbstractDocument document) {
-
+        docIdToDocPathMapping.put(document.getDocId(), document.getDocPath());
+        List<AbstractTermTuple> tupleList = document.getTuples();
+        for (AbstractTermTuple tuple : tupleList) {
+            AbstractPostingList postingList = termToPostingListMapping.get(tuple.term);
+            if (postingList == null) {
+                postingList = new PostingList();
+                termToPostingListMapping.put(tuple.term, postingList);
+            }
+            AbstractPosting posting = new Posting();
+            posting.setDocId(document.getDocId());
+            posting.setFreq(tuple.freq);
+            posting.getPositions().add(tuple.curPos);
+            postingList.add(posting);
+        }
     }
 
     /**
@@ -42,7 +48,11 @@ public class Index extends AbstractIndex {
      */
     @Override
     public void load(File file) {
-
+        try {
+            readObject(new ObjectInputStream(new FileInputStream(file)));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -53,7 +63,11 @@ public class Index extends AbstractIndex {
      */
     @Override
     public void save(File file) {
-
+        try {
+            writeObject(new ObjectOutputStream(new FileOutputStream(file)));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -64,7 +78,7 @@ public class Index extends AbstractIndex {
      */
     @Override
     public AbstractPostingList search(AbstractTerm term) {
-        return null;
+        return termToPostingListMapping.get(term);
     }
 
     /**
@@ -74,7 +88,7 @@ public class Index extends AbstractIndex {
      */
     @Override
     public Set<AbstractTerm> getDictionary() {
-        return null;
+        return termToPostingListMapping.keySet();
     }
 
     /**
@@ -87,7 +101,13 @@ public class Index extends AbstractIndex {
      */
     @Override
     public void optimize() {
-
+        for (Map.Entry<AbstractTerm, AbstractPostingList> next : termToPostingListMapping.entrySet()) {
+            AbstractPostingList list = next.getValue();
+            list.sort();
+            for (int i = 0; i < list.size(); i++) {
+                list.get(i).sort();
+            }
+        }
     }
 
     /**
@@ -98,7 +118,7 @@ public class Index extends AbstractIndex {
      */
     @Override
     public String getDocName(int docId) {
-        return null;
+        return docIdToDocPathMapping.get(docId);
     }
 
     /**
@@ -108,7 +128,22 @@ public class Index extends AbstractIndex {
      */
     @Override
     public void writeObject(ObjectOutputStream out) {
-
+        try {
+            Set<Map.Entry<AbstractTerm, AbstractPostingList>> t2pEntrySet = termToPostingListMapping.entrySet();
+            out.writeObject(t2pEntrySet.size());
+            for (Map.Entry<AbstractTerm, AbstractPostingList> entry : t2pEntrySet) {
+                entry.getKey().writeObject(out);
+                entry.getValue().writeObject(out);
+            }
+            Set<Map.Entry<Integer, String>> i2pEntrySet = docIdToDocPathMapping.entrySet();
+            out.writeObject(i2pEntrySet.size());
+            for (Map.Entry<Integer, String> entry : i2pEntrySet) {
+                out.writeInt(entry.getKey());
+                out.writeObject(entry.getValue());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -118,6 +153,22 @@ public class Index extends AbstractIndex {
      */
     @Override
     public void readObject(ObjectInputStream in) {
-
+        try {
+            termToPostingListMapping.clear();
+            int sizeOft2p = (int) in.readObject();
+            for (int i = 0; i < sizeOft2p; i++) {
+                termToPostingListMapping.put((AbstractTerm) in.readObject(),
+                        (AbstractPostingList) in.readObject());
+            }
+            docIdToDocPathMapping.clear();
+            int sizeOfi2p = (int) in.readObject();
+            for (int i = 0; i < sizeOfi2p; i++) {
+                docIdToDocPathMapping.put(in.readInt(), (String) in.readObject());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            System.out.println("Deserialization failed: class Index not found!\n");
+        }
     }
 }

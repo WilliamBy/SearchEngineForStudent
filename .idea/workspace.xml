@@ -4,20 +4,20 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4213cc7e-886d-4d43-8cf7-3b6d0767e64d" name="Default Changelist" comment="implement Document.java, Posting.java, PostingList.java, TermTuple.java">
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/hust/cs/javacourse/search/index/impl/Document.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/hust/cs/javacourse/search/index/impl/DocumentBuilder.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/hust/cs/javacourse/search/index/impl/Posting.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/hust/cs/javacourse/search/index/impl/PostingList.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/hust/cs/javacourse/search/index/impl/TermTuple.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/hust/cs/javacourse/search/parse/impl/StopWordTermTupleFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/hust/cs/javacourse/search/parse/impl/TermTupleScanner.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="4213cc7e-886d-4d43-8cf7-3b6d0767e64d" name="Default Changelist" comment="实现了索引包index和解析包parse">
+      <change afterPath="$PROJECT_DIR$/.idea/dictionaries/86173.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/hust/cs/javacourse/search/index/impl/IndexBuilder.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/hust/cs/javacourse/search/parse/impl/LengthTermTupleFilter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/hust/cs/javacourse/search/parse/impl/PatternTermTupleFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hust/cs/javacourse/search/index/impl/DocumentBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hust/cs/javacourse/search/index/impl/DocumentBuilder.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/hust/cs/javacourse/search/index/impl/Index.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hust/cs/javacourse/search/index/impl/Index.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hust/cs/javacourse/search/index/impl/PostingList.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hust/cs/javacourse/search/index/impl/PostingList.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/hust/cs/javacourse/search/index/impl/Term.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hust/cs/javacourse/search/index/impl/Term.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hust/cs/javacourse/search/util/StringSplitter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hust/cs/javacourse/search/util/StringSplitter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hust/cs/javacourse/search/parse/AbstractTermTupleStream.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hust/cs/javacourse/search/parse/AbstractTermTupleStream.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hust/cs/javacourse/search/util/Config.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hust/cs/javacourse/search/util/Config.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hust/cs/javacourse/search/util/FileUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hust/cs/javacourse/search/util/FileUtil.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -76,7 +76,10 @@
     <property name="project.structure.proportion" value="0.17" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
-    <property name="settings.editor.selected.configurable" value="configurable.group.language" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+  </component>
+  <component name="ReaderModeSettings">
+    <option name="showRenderedDocs" value="false" />
   </component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
@@ -92,15 +95,13 @@
     </key>
   </component>
   <component name="RunManager">
-    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
+    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
       <option name="arquillianRunConfiguration">
         <value>
           <option name="containerStateName" value="" />
         </value>
       </option>
-      <option name="TEST_OBJECT" value="CLASS" />
-      <properties />
-      <listeners />
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -124,7 +125,17 @@
       <workItem from="1617416042461" duration="15000" />
       <workItem from="1617884779710" duration="3536000" />
       <workItem from="1618481354731" duration="12456000" />
-      <workItem from="1618620917658" duration="14016000" />
+      <workItem from="1618620917658" duration="17899000" />
+      <workItem from="1618641011471" duration="441000" />
+      <workItem from="1618644971195" duration="9326000" />
+      <workItem from="1619086482416" duration="7013000" />
+      <workItem from="1619093834739" duration="46000" />
+      <workItem from="1619094053689" duration="4245000" />
+      <workItem from="1619098375884" duration="588000" />
+      <workItem from="1619164906469" duration="56000" />
+      <workItem from="1619501159056" duration="11000" />
+      <workItem from="1619501508761" duration="73000" />
+      <workItem from="1619752179645" duration="3547000" />
     </task>
     <task id="LOCAL-00001" summary="implement Term">
       <created>1618486978042</created>
@@ -133,7 +144,14 @@
       <option name="project" value="LOCAL" />
       <updated>1618486978042</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="implement Document.java, Posting.java, PostingList.java, TermTuple.java&#10;implement StopWordTermTupleFilter.java, TermTupleScanner.java">
+      <created>1618636798380</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1618636798380</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -154,7 +172,9 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="implement Term" />
     <MESSAGE value="implement Document.java, Posting.java, PostingList.java, TermTuple.java" />
-    <option name="LAST_COMMIT_MESSAGE" value="implement Document.java, Posting.java, PostingList.java, TermTuple.java" />
+    <MESSAGE value="implement Document.java, Posting.java, PostingList.java, TermTuple.java&#10;implement StopWordTermTupleFilter.java, TermTupleScanner.java" />
+    <MESSAGE value="实现了索引包index和解析包parse" />
+    <option name="LAST_COMMIT_MESSAGE" value="实现了索引包index和解析包parse" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

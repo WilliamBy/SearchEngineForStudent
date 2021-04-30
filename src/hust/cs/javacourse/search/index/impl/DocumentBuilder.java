@@ -2,10 +2,18 @@ package hust.cs.javacourse.search.index.impl;
 
 import hust.cs.javacourse.search.index.AbstractDocument;
 import hust.cs.javacourse.search.index.AbstractDocumentBuilder;
+import hust.cs.javacourse.search.index.AbstractTerm;
+import hust.cs.javacourse.search.index.AbstractTermTuple;
 import hust.cs.javacourse.search.parse.AbstractTermTupleStream;
+import hust.cs.javacourse.search.parse.impl.LengthTermTupleFilter;
+import hust.cs.javacourse.search.parse.impl.PatternTermTupleFilter;
+import hust.cs.javacourse.search.parse.impl.StopWordTermTupleFilter;
+import hust.cs.javacourse.search.parse.impl.TermTupleScanner;
+import hust.cs.javacourse.search.util.Config;
 
-import java.io.File;
-//TODO
+import java.io.*;
+import java.util.regex.Pattern;
+
 public class DocumentBuilder extends AbstractDocumentBuilder {
 
     /**
@@ -19,7 +27,15 @@ public class DocumentBuilder extends AbstractDocumentBuilder {
      */
     @Override
     public AbstractDocument build(int docId, String docPath, AbstractTermTupleStream termTupleStream) {
-        return null;
+        AbstractDocument document = new Document();
+        document.setDocId(docId);
+        document.setDocPath(docPath);
+        AbstractTermTuple termTuple = termTupleStream.next();
+        while (termTuple != null) {
+            document.addTuple(termTuple);
+            termTuple = termTupleStream.next();
+        }
+        return document;
     }
 
     /**
@@ -35,6 +51,15 @@ public class DocumentBuilder extends AbstractDocumentBuilder {
      */
     @Override
     public AbstractDocument build(int docId, String docPath, File file) {
-        return null;
+        BufferedReader buff = null;
+        try {
+            buff = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        AbstractTermTupleStream tts = new PatternTermTupleFilter(new TermTupleScanner(buff));
+        ((PatternTermTupleFilter) tts).setPattern(Pattern.compile(Config.TERM_FILTER_PATTERN));
+        tts = new StopWordTermTupleFilter(tts);
+        return build(docId, docPath, tts);
     }
 }
