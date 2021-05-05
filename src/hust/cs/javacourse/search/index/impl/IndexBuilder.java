@@ -35,6 +35,7 @@ public class IndexBuilder extends AbstractIndexBuilder {
             AbstractDocument document = docBuilder.build(docId, txtPath, new File(txtPath));
             index.addDocument(document);
         }
+        index.optimize();
         index.save(new File(Config.INDEX_DIR + "index"));
         return index;
     }
