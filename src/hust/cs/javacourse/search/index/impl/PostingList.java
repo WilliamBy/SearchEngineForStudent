@@ -17,15 +17,38 @@ public class PostingList extends AbstractPostingList {
      */
     @Override
     public void add(AbstractPosting posting) {
+        if (list.contains(posting)) return;
         for (AbstractPosting previousPosting : list) {
+            //遍历postingList检查是否有与参数posting具有相同docId的posting
+            //如果有则更新该posting的positions列表和freq大小，注意positions内不能有重复元素
+            //如果没有则直接添加该posting
             if (previousPosting.getDocId() == posting.getDocId()) {
-                previousPosting.setFreq(previousPosting.getFreq() + posting.getFreq());
-                previousPosting.getPositions().addAll(posting.getPositions());
+                List<Integer> previousPositions = previousPosting.getPositions();
+                //取两个positions的交集
+                for (Integer position : posting.getPositions()) {
+                    if (!previousPositions.contains(position)) {
+                        previousPositions.add(position);
+                    }
+                }
+                previousPosting.setFreq(previousPositions.size());
                 return;
             }
         }
         list.add(posting);
     }
+
+    /**
+     * 添加Posting列表,要求不能有内容重复的posting
+     *
+     * @param postings ：Posting列表
+     */
+    @Override
+    public void add(List<AbstractPosting> postings) {
+        for (AbstractPosting posting : postings) {
+            add(posting);
+        }
+    }
+
 
     /**
      * 获得PosingList的字符串表示
@@ -39,18 +62,6 @@ public class PostingList extends AbstractPostingList {
             strBuff.append(posting).append("\n");
         }
         return strBuff.toString().trim();
-    }
-
-    /**
-     * 添加Posting列表,要求不能有内容重复的posting
-     *
-     * @param postings ：Posting列表
-     */
-    @Override
-    public void add(List<AbstractPosting> postings) {
-        for (AbstractPosting posting : list) {
-            add(posting);
-        }
     }
 
     /**

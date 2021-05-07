@@ -13,7 +13,7 @@ public class Index extends AbstractIndex {
      */
     @Override
     public String toString() {
-        StringBuffer strBuff = new StringBuffer("Index\n");
+        StringBuffer strBuff = new StringBuffer("* INDEX ******************\n");
         strBuff.append("\n- DocId To DocPath Mapping -------------------\n");
         for (Map.Entry<Integer, String> entry : docIdToDocPathMapping.entrySet()) {
             strBuff.append(entry.getKey()).append(": ").append(entry.getValue()).append("\n");
@@ -24,6 +24,7 @@ public class Index extends AbstractIndex {
             strBuff.append("\n# ").append(entry.getKey()).append("\n").append(entry.getValue()).append("\n");
         }
         strBuff.append("----------------------------------------------\n");
+        strBuff.append("**********************************************\n");
         return strBuff.toString().trim();
     }
 
@@ -37,6 +38,9 @@ public class Index extends AbstractIndex {
         docIdToDocPathMapping.put(document.getDocId(), document.getDocPath());
         List<AbstractTermTuple> tupleList = document.getTuples();
         for (AbstractTermTuple tuple : tupleList) {
+            //对文档中每个三元组的term，查询其在index中对应的postingList，并新建与三元组对应的posting；
+            //如果无对应postingList，则先新建一个term-postingList对，然后再包含该posting；
+            //如果有对应的postingList，则直接将新建的posting加入到对应的postingList中去。
             AbstractPostingList postingList = termToPostingListMapping.get(tuple.term);
             if (postingList == null) {
                 postingList = new PostingList();
@@ -167,8 +171,11 @@ public class Index extends AbstractIndex {
             termToPostingListMapping.clear();
             int sizeOft2p = (int) in.readObject();
             for (int i = 0; i < sizeOft2p; i++) {
-                termToPostingListMapping.put((AbstractTerm) in.readObject(),
-                        (AbstractPostingList) in.readObject());
+                AbstractTerm term = new Term();
+                AbstractPostingList postingList = new PostingList();
+                term.readObject(in);
+                postingList.readObject(in);
+                termToPostingListMapping.put(term, postingList);
             }
             docIdToDocPathMapping.clear();
             int sizeOfi2p = (int) in.readObject();

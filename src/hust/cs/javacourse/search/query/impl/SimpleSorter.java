@@ -5,12 +5,9 @@ import hust.cs.javacourse.search.index.AbstractTerm;
 import hust.cs.javacourse.search.query.AbstractHit;
 import hust.cs.javacourse.search.query.Sort;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
-public class SimpleSort implements Sort {
+public class SimpleSorter implements Sort {
 
     /**
      * 对命中结果集合根据文档得分排序
@@ -22,7 +19,12 @@ public class SimpleSort implements Sort {
         for (AbstractHit hit : hits) {
             score(hit);
         }
-        Collections.sort(hits);
+        hits.sort(new Comparator<AbstractHit>() {
+            @Override
+            public int compare(AbstractHit o1, AbstractHit o2) {
+                return (int) (o2.getScore() - o1.getScore());
+            }
+        });
     }
 
     /**
@@ -38,8 +40,12 @@ public class SimpleSort implements Sort {
      */
     @Override
     public double score(AbstractHit hit) {
-        //TODO: SCORE_SORT
-        hit.setScore(1);
+        int score = 0;
+        Collection<AbstractPosting> postings = hit.getTermPostingMapping().values();
+        for (AbstractPosting posting : postings) {
+            score += posting.getFreq();
+        }
+        hit.setScore(score);
         return hit.getScore();
     }
 }

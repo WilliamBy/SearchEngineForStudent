@@ -31,8 +31,9 @@ public class LengthTermTupleFilter extends AbstractTermTupleFilter {
         int length; //单词长度
         do {
             termTuple = input.next();
+            //流中没有三元组则返回null
             if (termTuple == null) {
-                return null; //流中没有三元组
+                return null;
             }
             length = termTuple.term.getContent().length();
         } while (length > Config.TERM_FILTER_MAXLENGTH || length < Config.TERM_FILTER_MINLENGTH);

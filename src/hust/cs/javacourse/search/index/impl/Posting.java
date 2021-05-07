@@ -38,8 +38,10 @@ public class Posting extends AbstractPosting {
         if (this == obj) return true;
         if (obj == null || getClass() != obj.getClass()) return false;
         Posting posting = (Posting) obj;
+        //positions相等的语义是不考虑顺序的完全互相包含
         return Objects.equals(docId, posting.docId) && Objects.equals(freq, posting.freq) &&
-                Objects.equals(positions, posting.positions);
+                positions.containsAll(posting.getPositions()) &&
+                posting.getPositions().containsAll(positions);
     }
 
     /**

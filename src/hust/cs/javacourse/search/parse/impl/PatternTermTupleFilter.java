@@ -4,17 +4,18 @@ import hust.cs.javacourse.search.index.AbstractTermTuple;
 import hust.cs.javacourse.search.index.impl.TermTuple;
 import hust.cs.javacourse.search.parse.AbstractTermTupleFilter;
 import hust.cs.javacourse.search.parse.AbstractTermTupleStream;
+import hust.cs.javacourse.search.util.Config;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * 模式匹配三元组过滤器：使用前需要设置文本过滤模式Regex
+ * 模式匹配三元组过滤器：根据Config.TERM_FILTER_PATTERN设置文本过滤模式Regex
  */
 public class PatternTermTupleFilter extends AbstractTermTupleFilter {
 
     private AbstractTermTuple termTuple;
-    private Pattern pattern;
+    private final Pattern pattern = Pattern.compile(Config.TERM_FILTER_PATTERN);
     private Matcher matcher;
 
     /**
@@ -23,14 +24,6 @@ public class PatternTermTupleFilter extends AbstractTermTupleFilter {
      */
     public PatternTermTupleFilter(AbstractTermTupleStream input) {
         super(input);
-    }
-
-    /**
-     * 设置模式
-     * @param pattern 要设置的模式
-     */
-    public void setPattern(Pattern pattern) {
-        this.pattern = pattern;
     }
 
     /**

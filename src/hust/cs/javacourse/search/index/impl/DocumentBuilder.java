@@ -30,11 +30,13 @@ public class DocumentBuilder extends AbstractDocumentBuilder {
         AbstractDocument document = new Document();
         document.setDocId(docId);
         document.setDocPath(docPath);
+        //将三元组流中的三元组一个个读入document对象
         AbstractTermTuple termTuple = termTupleStream.next();
         while (termTuple != null) {
             document.addTuple(termTuple);
             termTuple = termTupleStream.next();
         }
+        termTupleStream.close();
         return document;
     }
 
@@ -57,9 +59,8 @@ public class DocumentBuilder extends AbstractDocumentBuilder {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        AbstractTermTupleStream tts = new PatternTermTupleFilter(new TermTupleScanner(buff));
-        ((PatternTermTupleFilter) tts).setPattern(Pattern.compile(Config.TERM_FILTER_PATTERN));
-        tts = new StopWordTermTupleFilter(tts);
+        AbstractTermTupleStream tts;
+        tts = new StopWordTermTupleFilter(new PatternTermTupleFilter(new TermTupleScanner(buff)));
         return build(docId, docPath, tts);
     }
 }

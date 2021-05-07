@@ -112,13 +112,17 @@ public class Hit extends AbstractHit {
      */
     @Override
     public String toString() {
-        return "Hit{" +
-                "docId=" + docId +
-                ", docPath='" + docPath + '\'' +
-                ", content='" + content + '\'' +
-                ", termPostingMapping=" + termPostingMapping +
-                ", score=" + score +
-                '}';
+        StringBuffer buffer = new StringBuffer("Hit {" +
+                "\n- docId: " + docId +
+                "\n- docPath:'" + docPath + '\'' +
+                "\n- content:\n" + content +
+                "\n- score: " + score +
+                "\n- termPostingMapping:\n");
+        for (Map.Entry<AbstractTerm, AbstractPosting> entry : termPostingMapping.entrySet()) {
+            buffer.append(entry.getKey()).append(": ").append(entry.getValue()).append("\n");
+        }
+        buffer.append("\n}");
+        return buffer.toString().trim();
     }
 
     /**

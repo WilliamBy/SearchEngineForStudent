@@ -62,26 +62,25 @@ public class IndexSearcher extends AbstractIndexSearcher {
         ArrayList<AbstractHit> hitList = new ArrayList<>();
         AbstractPostingList postingList1 = index.search(queryTerm1);
         AbstractPostingList postingList2 = index.search(queryTerm2);
-        //存放两postingList中的posting元素
-        AbstractPosting posting1;
-        AbstractPosting posting2;
-        //存放term到posting的映射
-        Map<AbstractTerm, AbstractPosting> termPostingMap = new TreeMap<>();
-        //两postingList的指针
+        //设置两postingList的指针
         int i = 0, j = 0;
         while (i < postingList1.size() && j < postingList2.size()) {
-            posting1 = postingList1.get(i);
-            posting2 = postingList2.get(j);
+            AbstractPosting posting1 = postingList1.get(i);
+            AbstractPosting posting2 = postingList2.get(j);
             if (posting1.getDocId() == posting2.getDocId()) {
-                termPostingMap.clear();
+                //两term同时存在于同一文档
+                Map<AbstractTerm, AbstractPosting> termPostingMap = new TreeMap<>();
                 termPostingMap.put(queryTerm1, posting1);
                 termPostingMap.put(queryTerm2, posting2);
                 hitList.add(new Hit(posting1.getDocId(),
                         index.getDocName(posting1.getDocId()),
                         termPostingMap));
+                i++;
+                j++;
             } else if (posting1.getDocId() < posting2.getDocId()) {
+                //对于OR逻辑关系要额外处理
                 if (combine == LogicalCombination.OR) {
-                    termPostingMap.clear();
+                    Map<AbstractTerm, AbstractPosting> termPostingMap = new TreeMap<>();
                     termPostingMap.put(queryTerm1, posting1);
                     hitList.add(new Hit(posting1.getDocId(),
                             index.getDocName(posting1.getDocId()),
@@ -90,7 +89,7 @@ public class IndexSearcher extends AbstractIndexSearcher {
                 i++;
             } else {
                 if (combine == LogicalCombination.OR) {
-                    termPostingMap.clear();
+                    Map<AbstractTerm, AbstractPosting> termPostingMap = new TreeMap<>();
                     termPostingMap.put(queryTerm2, posting2);
                     hitList.add(new Hit(posting2.getDocId(),
                             index.getDocName(posting2.getDocId()),
@@ -102,22 +101,26 @@ public class IndexSearcher extends AbstractIndexSearcher {
         //对于OR关系，还要将剩下未加入的posting全部加入hitList
         if (combine == LogicalCombination.OR) {
             while (i < postingList1.size()) {
-                posting1 = postingList1.get(i);
-                termPostingMap.clear();
+                AbstractPosting posting1 = postingList1.get(i);
+                Map<AbstractTerm, AbstractPosting> termPostingMap = new TreeMap<>();
                 termPostingMap.put(queryTerm1, posting1);
                 hitList.add(new Hit(posting1.getDocId(),
                         index.getDocName(posting1.getDocId()),
                         termPostingMap));
+                i++;
             }
             while (j < postingList2.size()) {
-                posting2 = postingList2.get(i);
-                termPostingMap.clear();
+                AbstractPosting posting2 = postingList2.get(i);
+                Map<AbstractTerm, AbstractPosting> termPostingMap = new TreeMap<>();
                 termPostingMap.put(queryTerm2, posting2);
                 hitList.add(new Hit(posting2.getDocId(),
                         index.getDocName(posting2.getDocId()),
                         termPostingMap));
+                j++;
             }
         }
-        return hitList.toArray(new AbstractHit[0]);
+        AbstractHit[] hits = hitList.toArray(new AbstractHit[0]);
+        sorter.sort(Arrays.asList(hits));
+        return hits;
     }
 }
