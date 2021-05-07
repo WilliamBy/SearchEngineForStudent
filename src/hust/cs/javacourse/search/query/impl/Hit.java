@@ -112,8 +112,14 @@ public class Hit extends AbstractHit {
      */
     @Override
     public String toString() {
-        return null;
-    }//TODO: hit.toString()
+        return "Hit{" +
+                "docId=" + docId +
+                ", docPath='" + docPath + '\'' +
+                ", content='" + content + '\'' +
+                ", termPostingMapping=" + termPostingMapping +
+                ", score=" + score +
+                '}';
+    }
 
     /**
      * 比较二个命中结果的大小，根据score比较

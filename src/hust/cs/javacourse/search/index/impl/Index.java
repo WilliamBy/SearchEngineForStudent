@@ -13,8 +13,18 @@ public class Index extends AbstractIndex {
      */
     @Override
     public String toString() {
-        //TODO: Index.toString()
-        return null;
+        StringBuffer strBuff = new StringBuffer("Index\n");
+        strBuff.append("\n- DocId To DocPath Mapping -------------------\n");
+        for (Map.Entry<Integer, String> entry : docIdToDocPathMapping.entrySet()) {
+            strBuff.append(entry.getKey()).append(": ").append(entry.getValue()).append("\n");
+        }
+        strBuff.append("----------------------------------------------\n");
+        strBuff.append("\n- Term To PostingList Mapping ----------------\n");
+        for (Map.Entry<AbstractTerm, AbstractPostingList> entry : termToPostingListMapping.entrySet()) {
+            strBuff.append("\n# ").append(entry.getKey()).append("\n").append(entry.getValue()).append("\n");
+        }
+        strBuff.append("----------------------------------------------\n");
+        return strBuff.toString().trim();
     }
 
     /**

@@ -34,9 +34,11 @@ public class PostingList extends AbstractPostingList {
      */
     @Override
     public String toString() {
-        return "PostingList{" +
-                "list=" + list +
-                '}';
+        StringBuffer strBuff = new StringBuffer();
+        for (AbstractPosting posting : list) {
+            strBuff.append(posting).append("\n");
+        }
+        return strBuff.toString().trim();
     }
 
     /**

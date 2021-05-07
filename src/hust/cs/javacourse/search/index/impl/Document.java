@@ -132,6 +132,5 @@ public class Document extends AbstractDocument {
                 ", docPath='" + docPath + '\'' +
                 ", tuples=" + tuples +
                 '}';
-        //FIXME: Document.toString()
     }
 }

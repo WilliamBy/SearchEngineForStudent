@@ -47,7 +47,8 @@ public class Term extends AbstractTerm {
         if (content == null || term.content == null) {
             return false;
         }
-        if (Config.IGNORE_CASE) {   //检查是否区分大小写
+        //检查是否区分大小写
+        if (Config.IGNORE_CASE) {
             return content.equalsIgnoreCase(term.content);
         }
         return content.equals(term.content);
@@ -60,7 +61,7 @@ public class Term extends AbstractTerm {
      */
     @Override
     public String toString() {
-        return content;
+        return content.trim();
     }
 
     /**
