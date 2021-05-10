@@ -34,6 +34,8 @@ public class IndexSearcher extends AbstractIndexSearcher {
     @Override
     public AbstractHit[] search(AbstractTerm queryTerm, Sort sorter) {
         AbstractPostingList postingList = index.search(queryTerm);
+        //未命中任何结果则返回空数组
+        if (postingList == null) return new AbstractHit[0];
         AbstractHit[] hits = new AbstractHit[postingList.size()];
         for (int i = 0; i < hits.length; i++) {
             AbstractPosting posting = postingList.get(i);
@@ -58,10 +60,41 @@ public class IndexSearcher extends AbstractIndexSearcher {
      */
     @Override
     public AbstractHit[] search(AbstractTerm queryTerm1, AbstractTerm queryTerm2, Sort sorter, LogicalCombination combine) {
-        //命中列表
-        ArrayList<AbstractHit> hitList = new ArrayList<>();
         AbstractPostingList postingList1 = index.search(queryTerm1);
         AbstractPostingList postingList2 = index.search(queryTerm2);
+        //未命中任何结果则返回空数组
+        //若只有一个词汇未命中任何结果则按组合逻辑返回数组
+        if (postingList1 == null && postingList2 == null) return new AbstractHit[0];
+        else if (postingList1 == null) {
+            if (combine == LogicalCombination.AND) return new AbstractHit[0];
+            AbstractHit[] hits = new AbstractHit[postingList2.size()];
+            for (int i = 0; i < hits.length; i++) {
+                AbstractPosting posting = postingList2.get(i);
+                Map<AbstractTerm, AbstractPosting> termPostingMap = new TreeMap<>();
+                termPostingMap.put(queryTerm2, posting);
+                hits[i] = new Hit(posting.getDocId(),
+                        index.getDocName(posting.getDocId()),
+                        termPostingMap);
+            }
+            sorter.sort(Arrays.asList(hits));
+            return hits;
+        } else if (postingList2 == null) {
+            if (combine == LogicalCombination.AND) return new AbstractHit[0];
+            AbstractHit[] hits = new AbstractHit[postingList1.size()];
+            for (int i = 0; i < hits.length; i++) {
+                AbstractPosting posting = postingList1.get(i);
+                Map<AbstractTerm, AbstractPosting> termPostingMap = new TreeMap<>();
+                termPostingMap.put(queryTerm1, posting);
+                hits[i] = new Hit(posting.getDocId(),
+                        index.getDocName(posting.getDocId()),
+                        termPostingMap);
+            }
+            sorter.sort(Arrays.asList(hits));
+            return hits;
+        }
+        //若两词汇都有命中的文档
+        //命中列表
+        ArrayList<AbstractHit> hitList = new ArrayList<>();
         //设置两postingList的指针
         int i = 0, j = 0;
         while (i < postingList1.size() && j < postingList2.size()) {
@@ -110,7 +143,7 @@ public class IndexSearcher extends AbstractIndexSearcher {
                 i++;
             }
             while (j < postingList2.size()) {
-                AbstractPosting posting2 = postingList2.get(i);
+                AbstractPosting posting2 = postingList2.get(j);
                 Map<AbstractTerm, AbstractPosting> termPostingMap = new TreeMap<>();
                 termPostingMap.put(queryTerm2, posting2);
                 hitList.add(new Hit(posting2.getDocId(),

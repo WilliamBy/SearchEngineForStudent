@@ -39,17 +39,20 @@ public class TermTupleScanner extends AbstractTermTupleScanner {
     /**
      * 获得下一个三元组
      *
-     * @return: 下一个三元组；如果到了流的末尾，返回null
+     * @return 下一个三元组；如果到了流的末尾，返回null
      */
     @Override
     public AbstractTermTuple next() {
         if (words == null || !words.hasNext()) {
             try {
-                line = input.readLine();
+                do {
+                    line = input.readLine();
+                    if (line == null) return null;
+                    //读到空行要忽略
+                } while (line.trim().equals(""));
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            if (line == null) return null;
             words = stringSplitter.splitByRegex(line).iterator();
         }
         TermTuple termTuple = new TermTuple();

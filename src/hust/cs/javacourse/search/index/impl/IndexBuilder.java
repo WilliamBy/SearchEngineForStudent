@@ -37,7 +37,7 @@ public class IndexBuilder extends AbstractIndexBuilder {
             docId++;
         }
         index.optimize();
-        index.save(new File(Config.INDEX_DIR + "index"));
+        index.save(new File(Config.INDEX_DIR));
         return index;
     }
 }

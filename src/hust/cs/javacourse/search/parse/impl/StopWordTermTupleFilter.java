@@ -43,13 +43,4 @@ public class StopWordTermTupleFilter extends AbstractTermTupleFilter {
         } while (Arrays.binarySearch(StopWords.STOP_WORDS, termTuple.term.getContent()) >= 0);
         return termTuple;
     }
-
-    public static void main(String[] args) {
-        String s = null;
-        do {
-            s = "the";
-
-        } while (s.equals("the"));
-
-    }
 }

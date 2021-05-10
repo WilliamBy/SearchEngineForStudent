@@ -22,7 +22,7 @@ public class DocumentBuilder extends AbstractDocumentBuilder {
      * @param docId             : 文档id
      * @param docPath           : 文档绝对路径
      * @param termTupleStream   : 文档对应的TermTupleStream
-     * @return ：Document对象
+     * @return Document对象
      * </pre>
      */
     @Override
@@ -36,7 +36,6 @@ public class DocumentBuilder extends AbstractDocumentBuilder {
             document.addTuple(termTuple);
             termTuple = termTupleStream.next();
         }
-        termTupleStream.close();
         return document;
     }
 
@@ -53,14 +52,23 @@ public class DocumentBuilder extends AbstractDocumentBuilder {
      */
     @Override
     public AbstractDocument build(int docId, String docPath, File file) {
-        BufferedReader buff = null;
+        AbstractDocument document = null;
+        AbstractTermTupleStream ts = null;
         try {
-            buff = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
+            ts= new TermTupleScanner(new BufferedReader(new InputStreamReader(new
+                    FileInputStream(file))));
+            ts = new StopWordTermTupleFilter(ts); //再加上停用词过滤器
+            ts = new PatternTermTupleFilter(ts); //再加上正则表达式过滤器
+            ts = new LengthTermTupleFilter(ts); //再加上单词长度过滤器
+            document = build(docId,docPath,ts);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        AbstractTermTupleStream tts;
-        tts = new StopWordTermTupleFilter(new PatternTermTupleFilter(new TermTupleScanner(buff)));
-        return build(docId, docPath, tts);
+        finally {
+            if (ts != null) {
+                ts.close();
+            }
+        }
+        return document;
     }
 }

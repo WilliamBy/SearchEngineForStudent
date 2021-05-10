@@ -4,25 +4,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4213cc7e-886d-4d43-8cf7-3b6d0767e64d" name="Default Changelist" comment="Finished toString method.&#10;Finished all functional module.&#10;Haven't test the project.">
-      <change afterPath="$PROJECT_DIR$/index/index" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/index/origin" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/text/the.txt" afterDir="false" />
+    <list default="true" id="4213cc7e-886d-4d43-8cf7-3b6d0767e64d" name="Default Changelist" comment="backup">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hust/cs/javacourse/search/index/AbstractDocumentBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hust/cs/javacourse/search/index/AbstractDocumentBuilder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/index/index" beforeDir="false" afterPath="$PROJECT_DIR$/index/index" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/index/origin" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/hust/cs/javacourse/search/index/impl/DocumentBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hust/cs/javacourse/search/index/impl/DocumentBuilder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hust/cs/javacourse/search/index/impl/Index.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hust/cs/javacourse/search/index/impl/Index.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/hust/cs/javacourse/search/index/impl/IndexBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hust/cs/javacourse/search/index/impl/IndexBuilder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hust/cs/javacourse/search/index/impl/Posting.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hust/cs/javacourse/search/index/impl/Posting.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hust/cs/javacourse/search/index/impl/PostingList.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hust/cs/javacourse/search/index/impl/PostingList.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hust/cs/javacourse/search/parse/impl/LengthTermTupleFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hust/cs/javacourse/search/parse/impl/LengthTermTupleFilter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hust/cs/javacourse/search/parse/impl/PatternTermTupleFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hust/cs/javacourse/search/parse/impl/PatternTermTupleFilter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/hust/cs/javacourse/search/parse/impl/StopWordTermTupleFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hust/cs/javacourse/search/parse/impl/StopWordTermTupleFilter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hust/cs/javacourse/search/query/impl/Hit.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hust/cs/javacourse/search/query/impl/Hit.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hust/cs/javacourse/search/parse/impl/TermTupleScanner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hust/cs/javacourse/search/parse/impl/TermTupleScanner.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/hust/cs/javacourse/search/query/impl/IndexSearcher.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hust/cs/javacourse/search/query/impl/IndexSearcher.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hust/cs/javacourse/search/query/impl/SimpleSort.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hust/cs/javacourse/search/query/impl/SimpleSorter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/hust/cs/javacourse/search/run/TestBuildIndex.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hust/cs/javacourse/search/run/TestBuildIndex.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/hust/cs/javacourse/search/run/TestSearchIndex.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hust/cs/javacourse/search/run/TestSearchIndex.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/text/2.txt" beforeDir="false" afterPath="$PROJECT_DIR$/text/2.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/text/the.txt" beforeDir="false" afterPath="$PROJECT_DIR$/text/the.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -91,10 +85,10 @@
   </component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
+      <recent name="hust.cs.javacourse.search.index.impl" />
       <recent name="hust.cs.javacourse.search.query.impl" />
       <recent name="hust.cs.javacourse.search.parse.impl" />
       <recent name="hust.cs.javacourse.search.parse" />
-      <recent name="hust.cs.javacourse.search.index.impl" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\jetbrainsProjects\IntelliJ_IDEA\SearchEngineForStudent\src\hust\cs\javacourse\search\util" />
@@ -103,7 +97,7 @@
       <recent name="hust.cs.javacourse.search.index.impl" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.TestSearchIndex">
+  <component name="RunManager" selected="Application.TestBuildIndex">
     <configuration name="TestBuildIndex" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="hust.cs.javacourse.search.run.TestBuildIndex" />
       <module name="SearchEngineForStudent" />
@@ -118,6 +112,7 @@
       </method>
     </configuration>
     <configuration name="TestSearchIndex" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="ALTERNATIVE_JRE_PATH" value="16" />
       <option name="MAIN_CLASS_NAME" value="hust.cs.javacourse.search.run.TestSearchIndex" />
       <module name="SearchEngineForStudent" />
       <extension name="coverage">
@@ -141,10 +136,14 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <list>
+      <item itemvalue="Application.TestBuildIndex" />
+      <item itemvalue="Application.TestSearchIndex" />
+    </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.TestSearchIndex" />
         <item itemvalue="Application.TestBuildIndex" />
+        <item itemvalue="Application.TestSearchIndex" />
       </list>
     </recent_temporary>
   </component>
@@ -187,7 +186,12 @@
       <workItem from="1620384339635" duration="6244000" />
       <workItem from="1620390669483" duration="104000" />
       <workItem from="1620390885427" duration="153000" />
-      <workItem from="1620391076600" duration="3557000" />
+      <workItem from="1620391076600" duration="5419000" />
+      <workItem from="1620470998751" duration="6011000" />
+      <workItem from="1620633315475" duration="218000" />
+      <workItem from="1620633559986" duration="334000" />
+      <workItem from="1620634034119" duration="146000" />
+      <workItem from="1620634201873" duration="5223000" />
     </task>
     <task id="LOCAL-00001" summary="implement Term">
       <created>1618486978042</created>
@@ -224,7 +228,14 @@
       <option name="project" value="LOCAL" />
       <updated>1620372348909</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="backup">
+      <created>1620394739665</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1620394739665</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -250,7 +261,8 @@
     <MESSAGE value="实现了索引包index和解析包parse" />
     <MESSAGE value="query package finished.&#10;run package remained." />
     <MESSAGE value="Finished toString method.&#10;Finished all functional module.&#10;Haven't test the project." />
-    <option name="LAST_COMMIT_MESSAGE" value="Finished toString method.&#10;Finished all functional module.&#10;Haven't test the project." />
+    <MESSAGE value="backup" />
+    <option name="LAST_COMMIT_MESSAGE" value="backup" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
