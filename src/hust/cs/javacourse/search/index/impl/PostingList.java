@@ -58,8 +58,10 @@ public class PostingList extends AbstractPostingList {
     @Override
     public String toString() {
         StringBuffer strBuff = new StringBuffer();
-        for (AbstractPosting posting : list) {
-            strBuff.append(posting).append("\n");
+        if (list.isEmpty()) return "";
+        else strBuff.append(get(0));
+        for (int i = 1; i < list.size(); i++) {
+            strBuff.append("->").append(get(i));
         }
         return strBuff.toString().trim();
     }

@@ -51,9 +51,9 @@ public class Posting extends AbstractPosting {
      */
     @Override
     public String toString() {
-        return "docId=" + docId +
-                ", freq=" + freq +
-                ", positions=" + positions;
+        return "{\"docId\":" + docId +
+                ",\"freq\":" + freq +
+                ",\"positions\":" + positions + "}";
     }
 
     /**

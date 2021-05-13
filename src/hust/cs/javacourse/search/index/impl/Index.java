@@ -13,18 +13,16 @@ public class Index extends AbstractIndex {
      */
     @Override
     public String toString() {
-        StringBuffer strBuff = new StringBuffer("* INDEX ******************\n");
-        strBuff.append("\n- DocId To DocPath Mapping -------------------\n");
+        StringBuffer strBuff = new StringBuffer("Dictionary: ");
+        strBuff.append(getDictionary()).append("\n");
+        strBuff.append("DocId-----DocPath mapping:");
         for (Map.Entry<Integer, String> entry : docIdToDocPathMapping.entrySet()) {
-            strBuff.append(entry.getKey()).append(": ").append(entry.getValue()).append("\n");
+            strBuff.append("\n").append(entry.getKey()).append(": ").append(entry.getValue());
         }
-        strBuff.append("----------------------------------------------\n");
-        strBuff.append("\n- Term To PostingList Mapping ----------------\n");
+        strBuff.append("\nPostingList:");
         for (Map.Entry<AbstractTerm, AbstractPostingList> entry : termToPostingListMapping.entrySet()) {
-            strBuff.append("\n# ").append(entry.getKey()).append("\n").append(entry.getValue()).append("\n");
+            strBuff.append("\n").append(entry.getKey()).append("  ---->  ").append(entry.getValue());
         }
-        strBuff.append("----------------------------------------------\n");
-        strBuff.append("**********************************************\n");
         return strBuff.toString().trim();
     }
 
@@ -143,6 +141,7 @@ public class Index extends AbstractIndex {
     @Override
     public void writeObject(ObjectOutputStream out) {
         try {
+            if (out == null) return;
             Set<Map.Entry<AbstractTerm, AbstractPostingList>> t2pEntrySet = termToPostingListMapping.entrySet();
             out.writeObject(t2pEntrySet.size());
             for (Map.Entry<AbstractTerm, AbstractPostingList> entry : t2pEntrySet) {
@@ -168,6 +167,7 @@ public class Index extends AbstractIndex {
     @Override
     public void readObject(ObjectInputStream in) {
         try {
+            if (in == null) return;
             termToPostingListMapping.clear();
             int sizeOft2p = (int) in.readObject();
             for (int i = 0; i < sizeOft2p; i++) {
